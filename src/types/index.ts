@@ -1,3 +1,12 @@
+export interface User {
+  id: string;
+  email: string;
+  username: string;
+  fullName: string;
+  avatarUrl: string;
+  role: 'creator' | 'admin';
+}
+
 export interface Creator {
   id: string;
   username: string;
