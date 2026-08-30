@@ -13,7 +13,7 @@ export const SAMPLE_QUIZZES: QuizItem[] = [
     id: 'q1',
     question: 'Quốc gia nào có nhiều đảo nhất trên thế giới?',
     options: ['Indonesia', 'Philippines', 'Thụy Điển', 'Na Uy'],
-    correctIndex: 2, // Thụy Điển (>221.800 đảo)
+    correctIndex: 2,
     topic: 'Địa lý',
     level: 'medium',
   },
@@ -21,7 +21,7 @@ export const SAMPLE_QUIZZES: QuizItem[] = [
     id: 'q2',
     question: 'Tựa game GTA V lần đầu tiên phát hành vào năm nào?',
     options: ['2011', '2013', '2015', '2017'],
-    correctIndex: 1, // 2013
+    correctIndex: 1,
     topic: 'Game',
     level: 'easy',
   },
@@ -29,7 +29,7 @@ export const SAMPLE_QUIZZES: QuizItem[] = [
     id: 'q3',
     question: 'Vị vua nào đã ban chiếu dời đô về Thăng Long vào năm 1010?',
     options: ['Lý Thái Tổ', 'Lê Lợi', 'Trần Hưng Đạo', 'Quang Trung'],
-    correctIndex: 0, // Lý Thái Tổ
+    correctIndex: 0,
     topic: 'Lịch sử',
     level: 'easy',
   },
@@ -82,7 +82,10 @@ export const INITIAL_CREATORS: Record<string, Creator> = {
     goalTitle: 'Mua màn hình Stream 4K',
     goalTarget: 15000000,
     goalCurrent: 8450000,
-    countdownSeconds: 11692, // 03:14:52
+    countdownSeconds: 11692,
+    plan: 'pro',
+    walletBalance: 7605000,
+    totalEarnings: 8450000,
   },
 };
 
@@ -92,6 +95,8 @@ export const INITIAL_DONATIONS: Donation[] = [
     creatorId: 'c1-mixi',
     donorName: 'Minh Tú',
     amount: 100000,
+    netAmount: 95000,
+    platformFee: 5000,
     message: 'Chúc anh Độ và gia đình thật nhiều sức khỏe, stream vui vẻ ạ!',
     paymentCode: 'ZY9821',
     status: 'PAID',
@@ -103,6 +108,8 @@ export const INITIAL_DONATIONS: Donation[] = [
     creatorId: 'c1-mixi',
     donorName: 'Hoàng Long',
     amount: 50000,
+    netAmount: 47500,
+    platformFee: 2500,
     message: 'Quay thử thách trúng hát 1 bài anh nhé!',
     paymentCode: 'ZY3341',
     status: 'PAID',
@@ -115,6 +122,8 @@ export const INITIAL_DONATIONS: Donation[] = [
     creatorId: 'c1-mixi',
     donorName: 'Bộ Tộc Fan',
     amount: 30000,
+    netAmount: 28500,
+    platformFee: 1500,
     message: 'Thách đố kiến thức Địa lý!',
     paymentCode: 'ZY7729',
     status: 'PAID',

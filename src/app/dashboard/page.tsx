@@ -104,11 +104,23 @@ export default function DashboardPage() {
 
           <div className="flex items-center gap-3">
             <Link
+              href="/dashboard/wallet"
+              className="px-3.5 py-1.5 text-xs font-semibold text-green-400 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-xl transition flex items-center gap-1.5"
+            >
+              <span>Ví tiền (7.6M)</span>
+            </Link>
+            <Link
+              href="/pricing"
+              className="px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 rounded-xl transition flex items-center gap-1 shadow-md"
+            >
+              <span>Nâng cấp PRO</span>
+            </Link>
+            <Link
               href={`/${creator.username}`}
               target="_blank"
-              className="px-3.5 py-1.5 text-xs font-semibold text-pink-400 bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 rounded-xl transition flex items-center gap-1"
+              className="px-3.5 py-1.5 text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl transition flex items-center gap-1"
             >
-              <span>Xem Bio của bạn</span>
+              <span>Xem Bio</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </Link>
           </div>

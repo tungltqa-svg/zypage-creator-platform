@@ -54,6 +54,9 @@ export default function CreatorBioPage() {
     goalTarget: 10000000,
     goalCurrent: 3500000,
     countdownSeconds: 11692,
+    plan: 'free' as const,
+    walletBalance: 0,
+    totalEarnings: 0,
   };
 
   // State Tabs

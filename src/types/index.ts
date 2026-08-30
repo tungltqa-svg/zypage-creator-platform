@@ -5,6 +5,7 @@ export interface User {
   fullName: string;
   avatarUrl: string;
   role: 'creator' | 'admin';
+  plan: 'free' | 'pro' | 'enterprise';
 }
 
 export interface Creator {
@@ -21,12 +22,39 @@ export interface Creator {
   goalTarget: number;
   goalCurrent: number;
   countdownSeconds: number;
+  plan: 'free' | 'pro' | 'enterprise';
+  walletBalance: number;
+  totalEarnings: number;
+  customDomain?: string;
+  themeColor?: string;
+}
+
+export interface PayoutRequest {
+  id: string;
+  creatorId: string;
+  amount: number;
+  bankName: string;
+  bankAccount: string;
+  bankAccountName: string;
+  status: 'PENDING' | 'COMPLETED' | 'REJECTED';
+  createdAt: string;
+}
+
+export interface PricingPlan {
+  id: string;
+  name: string;
+  price: number;
+  period: 'month' | 'year';
+  description: string;
+  feePercent: number; // 0% for Pro, 5% for Free
+  features: string[];
+  popular?: boolean;
 }
 
 export interface WheelItem {
   id: string;
   title: string;
-  chance: number; // percentage, e.g. 20
+  chance: number;
   color: string;
 }
 
@@ -44,8 +72,8 @@ export interface DigitalProduct {
 export interface QuizItem {
   id: string;
   question: string;
-  options: [string, string, string, string]; // [A, B, C, D]
-  correctIndex: number; // 0, 1, 2, 3
+  options: [string, string, string, string];
+  correctIndex: number;
   topic: string;
   level: 'easy' | 'medium' | 'hard';
 }
@@ -55,6 +83,8 @@ export interface Donation {
   creatorId: string;
   donorName: string;
   amount: number;
+  netAmount: number; // Số tiền creator thực nhận sau khi trừ phí nền tảng
+  platformFee: number; // Phí nền tảng thu được (Doanh thu của Admin)
   message: string;
   paymentCode: string;
   status: 'PENDING' | 'PAID' | 'EXPIRED';

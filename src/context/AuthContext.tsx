@@ -15,6 +15,7 @@ const SYSTEM_ACCOUNTS: Record<string, { pass: string; user: User }> = {
       fullName: 'Hệ Thống Quản Trị Admin',
       avatarUrl: 'https://api.dicebear.com/7.x/bottts/svg?seed=Admin',
       role: 'admin',
+      plan: 'enterprise',
     },
   },
   'mixi@gmail.com': {
@@ -26,6 +27,7 @@ const SYSTEM_ACCOUNTS: Record<string, { pass: string; user: User }> = {
       fullName: 'Phùng Thanh Độ',
       avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MixiGaming',
       role: 'creator',
+      plan: 'pro',
     },
   },
 };
@@ -53,14 +55,12 @@ const AuthContext = createContext<AuthContextType>({
   loginWithGoogle: async () => {},
 });
 
-// Bộ nhớ đếm số lần nhập sai mật khẩu để chống Brute-Force
 const failedAttempts: Record<string, { count: number; lockUntil: number }> = {};
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Helper lấy danh sách tài khoản đã đăng ký trong máy
   const getRegisteredUsers = (): Record<string, StoredUserAccount> => {
     try {
       const data = localStorage.getItem('zy_registered_accounts');
@@ -90,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             fullName: session.user.user_metadata?.full_name || email.split('@')[0].toUpperCase(),
             avatarUrl: session.user.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
             role,
+            plan: 'pro',
           });
         }
         setLoading(false);
@@ -106,6 +107,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             fullName: session.user.user_metadata?.full_name || email.split('@')[0].toUpperCase(),
             avatarUrl: session.user.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
             role,
+            plan: 'pro',
           });
         } else {
           setUser(null);
@@ -115,7 +117,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return () => subscription.unsubscribe();
     } else {
-      // 2. Chế độ kiểm tra session đã lưu
       const savedUser = localStorage.getItem('zy_auth_session');
       if (savedUser) {
         setUser(JSON.parse(savedUser));
@@ -132,7 +133,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: false, error: 'Vui lòng nhập đầy đủ Email và Mật khẩu' };
     }
 
-    // Kiểm tra Khóa tài khoản do nhập sai quá 5 lần liên tiếp
     const now = Date.now();
     const attempt = failedAttempts[cleanEmail];
     if (attempt && attempt.lockUntil > now) {
@@ -143,11 +143,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
     }
 
-    // 1. Kiểm tra tài khoản Hệ thống (Admin & Demo Creator)
     const sysAcc = SYSTEM_ACCOUNTS[cleanEmail];
     if (sysAcc) {
       if (sysAcc.pass !== cleanPass) {
-        // Tăng đếm lỗi
         failedAttempts[cleanEmail] = {
           count: (attempt?.count || 0) + 1,
           lockUntil: (attempt?.count || 0) + 1 >= 5 ? now + 60000 : 0,
@@ -155,14 +153,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: false, error: 'Mật khẩu không chính xác. Vui lòng kiểm tra lại!' };
       }
 
-      // Xóa đếm lỗi khi đăng nhập thành công
       delete failedAttempts[cleanEmail];
       setUser(sysAcc.user);
       localStorage.setItem('zy_auth_session', JSON.stringify(sysAcc.user));
       return { success: true, role: sysAcc.user.role };
     }
 
-    // 2. Kiểm tra Supabase Auth nếu đã kết nối Cloud
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: cleanEmail,
@@ -181,13 +177,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         fullName: data.user.user_metadata?.full_name || cleanEmail.split('@')[0].toUpperCase(),
         avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${cleanEmail}`,
         role,
+        plan: 'free',
       };
       setUser(loggedUser);
       localStorage.setItem('zy_auth_session', JSON.stringify(loggedUser));
       return { success: true, role };
     }
 
-    // 3. Kiểm tra tài khoản người dùng đã Đăng ký trước đó
     const registered = getRegisteredUsers();
     const userAcc = registered[cleanEmail];
 
@@ -226,7 +222,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: false, error: 'Mật khẩu bảo mật phải có tối thiểu từ 6 ký tự trở lên.' };
     }
 
-    // Kiểm tra trùng Email trong danh sách hệ thống
     if (SYSTEM_ACCOUNTS[cleanEmail]) {
       return { success: false, error: 'Email này đã được sử dụng. Vui lòng đăng nhập hoặc dùng Email khác.' };
     }
@@ -236,7 +231,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: false, error: 'Email này đã tồn tại trong hệ thống. Vui lòng đăng nhập!' };
     }
 
-    // 1. Supabase Cloud Sign Up
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signUp({
         email: cleanEmail,
@@ -267,13 +261,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         fullName: cleanName,
         avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${cleanUser}`,
         role: 'creator',
+        plan: 'free',
       };
       setUser(newUser);
       localStorage.setItem('zy_auth_session', JSON.stringify(newUser));
       return { success: true };
     }
 
-    // 2. Lưu tài khoản mới
     const newUser: User = {
       id: 'u_' + Date.now(),
       email: cleanEmail,
@@ -281,6 +275,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       fullName: cleanName,
       avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${cleanUser}`,
       role: 'creator',
+      plan: 'free',
     };
 
     saveRegisteredUser(cleanEmail, { user: newUser, pass: cleanPass });
@@ -300,6 +295,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         fullName: 'Google Creator User',
         avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=GoogleUser',
         role: 'creator',
+        plan: 'pro',
       };
       setUser(googleUser);
       localStorage.setItem('zy_auth_session', JSON.stringify(googleUser));
