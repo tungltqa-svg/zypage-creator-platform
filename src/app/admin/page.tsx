@@ -111,9 +111,15 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-3 text-xs">
+            <Link
+              href="/admin/monitoring"
+              className="px-3 py-1.5 bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 rounded-lg flex items-center gap-1.5 transition font-bold"
+            >
+              <Activity className="w-3.5 h-3.5 text-green-400 animate-pulse" /> Live Telemetry APM & Logs
+            </Link>
             <span className="text-slate-400 hidden sm:inline">
-              Quản trị viên: <b className="text-red-400">{user?.email || 'admin@zypage.com'}</b>
+              Admin: <b className="text-red-400">{user?.email || 'admin@zypage.com'}</b>
             </span>
             <button
               onClick={async () => {
