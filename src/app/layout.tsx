@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
   title: 'ZyPage - Nền tảng Bio & Donate miễn phí cho Streamer & Creator',
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark">
       <body className="min-h-screen bg-[#090d16] text-slate-100 antialiased selection:bg-pink-500 selection:text-white">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
