@@ -127,7 +127,29 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* Main Container */}
+      {/* Subheader Studio Navigation */}
+      <div className="border-b border-white/5 bg-[#0b101d]/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 overflow-x-auto py-2.5 text-xs font-semibold">
+          <Link href="/dashboard" className="px-3 py-1.5 rounded-xl bg-pink-500/10 text-pink-400 border border-pink-500/30 whitespace-nowrap font-bold">
+            🎛️ Tổng Quan & OBS
+          </Link>
+          <Link href="/dashboard/wallet" className="px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 hover:text-white transition whitespace-nowrap">
+            💰 Ví Tiền & Rút Tiền
+          </Link>
+          <Link href="/dashboard/analytics" className="px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 hover:text-white transition whitespace-nowrap">
+            📊 Báo Cáo Doanh Thu
+          </Link>
+          <Link href="/dashboard/customizer" className="px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 hover:text-white transition whitespace-nowrap">
+            🎨 Tùy Biến Giao Diện
+          </Link>
+          <Link href="/dashboard/referral" className="px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 hover:text-white transition whitespace-nowrap">
+            🎁 Giới Thiệu 10% Hoa Hồng
+          </Link>
+          <Link href="/pricing" className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 text-pink-300 border border-pink-500/30 hover:opacity-90 transition whitespace-nowrap font-bold">
+            💎 Nâng Cấp Gói PRO
+          </Link>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         {/* Creator Heading */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
