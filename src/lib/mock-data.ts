@@ -1,4 +1,4 @@
-import { Creator, Donation, WheelItem, DigitalProduct, QuizItem } from '@/types';
+import { Creator, Donation, WheelItem, DigitalProduct, QuizItem, TopDonor, PayoutRequest } from '@/types';
 
 export const DEFAULT_WHEEL_ITEMS: WheelItem[] = [
   { id: 'w1', title: 'Hát 1 bài theo yêu cầu', chance: 20, color: '#ff2e93' },
@@ -68,12 +68,51 @@ export const SAMPLE_PRODUCTS: DigitalProduct[] = [
   },
 ];
 
+export const TOP_DONORS_LEADERBOARD: TopDonor[] = [
+  {
+    rank: 1,
+    donorName: 'Đại Gia Giấu Tên 👑',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=KingDonor',
+    totalAmount: 5000000,
+    donationCount: 12,
+  },
+  {
+    rank: 2,
+    donorName: 'Minh Tú Gaming 🥈',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MinhTu',
+    totalAmount: 2500000,
+    donationCount: 8,
+  },
+  {
+    rank: 3,
+    donorName: 'Hoàng Long VIP 🥉',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=HoangLong',
+    totalAmount: 1800000,
+    donationCount: 6,
+  },
+  {
+    rank: 4,
+    donorName: 'Fan Cứng Bộ Tộc',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=FanCung',
+    totalAmount: 950000,
+    donationCount: 5,
+  },
+  {
+    rank: 5,
+    donorName: 'Tuấn Anh Pro',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=TuanAnh',
+    totalAmount: 600000,
+    donationCount: 3,
+  },
+];
+
 export const INITIAL_CREATORS: Record<string, Creator> = {
   mixigaming: {
     id: 'c1-mixi',
     username: 'mixigaming',
     fullName: 'Phùng Thanh Độ',
     avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MixiGaming',
+    bannerUrl: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200&auto=format&fit=crop&q=80',
     bio: 'Streamer / Content Creator. Chào mừng bạn đến với Bộ tộc MixiGaming!',
     bankName: 'MB',
     bankAccount: '9999999999',
@@ -86,8 +125,34 @@ export const INITIAL_CREATORS: Record<string, Creator> = {
     plan: 'pro',
     walletBalance: 7605000,
     totalEarnings: 8450000,
+    themeColor: '#ff2e93',
   },
 };
+
+export const INITIAL_PAYOUT_REQUESTS: PayoutRequest[] = [
+  {
+    id: 'po_991',
+    creatorId: 'c1-mixi',
+    creatorName: 'Phùng Thanh Độ (@mixigaming)',
+    amount: 5000000,
+    bankName: 'MB',
+    bankAccount: '9999999999',
+    bankAccountName: 'PHUNG THANH DO',
+    status: 'PENDING',
+    createdAt: 'Hôm nay, 10:15',
+  },
+  {
+    id: 'po_990',
+    creatorId: 'c2-cris',
+    creatorName: 'Cris Phan (@crisdevilgamer)',
+    amount: 10000000,
+    bankName: 'VCB',
+    bankAccount: '0071001234567',
+    bankAccountName: 'PHAN LE VY THANH',
+    status: 'COMPLETED',
+    createdAt: 'Hôm qua, 16:40',
+  },
+];
 
 export const INITIAL_DONATIONS: Donation[] = [
   {

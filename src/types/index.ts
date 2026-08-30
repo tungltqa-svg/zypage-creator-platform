@@ -8,11 +8,20 @@ export interface User {
   plan: 'free' | 'pro' | 'enterprise';
 }
 
+export interface TopDonor {
+  rank: number;
+  donorName: string;
+  avatarUrl: string;
+  totalAmount: number;
+  donationCount: number;
+}
+
 export interface Creator {
   id: string;
   username: string;
   fullName: string;
   avatarUrl: string;
+  bannerUrl?: string;
   bio: string;
   bankName: string;
   bankAccount: string;
@@ -25,30 +34,20 @@ export interface Creator {
   plan: 'free' | 'pro' | 'enterprise';
   walletBalance: number;
   totalEarnings: number;
-  customDomain?: string;
   themeColor?: string;
+  customDomain?: string;
 }
 
 export interface PayoutRequest {
   id: string;
   creatorId: string;
+  creatorName: string;
   amount: number;
   bankName: string;
   bankAccount: string;
   bankAccountName: string;
   status: 'PENDING' | 'COMPLETED' | 'REJECTED';
   createdAt: string;
-}
-
-export interface PricingPlan {
-  id: string;
-  name: string;
-  price: number;
-  period: 'month' | 'year';
-  description: string;
-  feePercent: number; // 0% for Pro, 5% for Free
-  features: string[];
-  popular?: boolean;
 }
 
 export interface WheelItem {
@@ -83,12 +82,13 @@ export interface Donation {
   creatorId: string;
   donorName: string;
   amount: number;
-  netAmount: number; // Số tiền creator thực nhận sau khi trừ phí nền tảng
-  platformFee: number; // Phí nền tảng thu được (Doanh thu của Admin)
+  netAmount: number;
+  platformFee: number;
   message: string;
   paymentCode: string;
   status: 'PENDING' | 'PAID' | 'EXPIRED';
   type: 'donate' | 'voice' | 'wheel' | 'music' | 'quiz' | 'product';
+  alertSound?: string;
   extraData?: {
     voiceAudioUrl?: string;
     youtubeUrl?: string;
@@ -112,6 +112,7 @@ export interface AlertPayload {
   youtubeTitle?: string;
   wheelResult?: string;
   quizData?: QuizItem;
+  alertSound?: string;
   timestamp: number;
 }
 
